@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <title>Υπολογισμός Κόστους Μεταφοράς</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #f2f2f2;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    label, select, input, button {
+      font-size: 16px;
+      margin-bottom: 15px;
+      display: block;
+      width: 100%;
+    }
+    select, input, button {
+      padding: 10px;
+    }
+    button {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h2>📍 Υπολογισμός Κόστους Μεταφοράς από Μελίσσια</h2>
+  <label for="city">Επιλέξτε Πόλη Προορισμού:</label>
+  <select id="city">
+    <option value="">— Επιλογή πόλης —</option>
+    <option value="5">Αθήνα (Κέντρο)</option>
+    <option value="10">Πειραιάς</option>
+    <option value="6">Χαλάνδρι</option>
+    <option value="7">Μαρούσι</option>
+    <option value="8">Κηφισιά</option>
+    <option value="9">Ηράκλειο</option>
+    <option value="10">Μεταμόρφωση</option>
+    <option value="6">Αγία Παρασκευή</option>
+    <option value="15">Γλυφάδα</option>
+    <option value="16">Αργυρούπολη</option>
+    <option value="14">Καλλιθέα</option>
+    <option value="13">Νέα Σμύρνη</option>
+    <option value="15">Περιστέρι</option>
+    <option value="17">Ίλιον</option>
+    <option value="12">Νέα Ιωνία</option>
+    <option value="12">Νέα Φιλαδέλφεια</option>
+    <option value="16">Αιγάλεω</option>
+    <option value="18">Κορυδαλλός</option>
+    <option value="18">Νίκαια</option>
+    <option value="11">Άγιοι Ανάργυροι</option>
+    <option value="19">Πετρούπολη</option>
+    <option value="9">Ζωγράφου</option>
+    <option value="10">Βύρωνας</option>
+    <option value="10">Δάφνη</option>
+    <option value="11">Υμηττός</option>
+    <option value="11">Καισαριανή</option>
+    <option value="13">Παλαιό Φάληρο</option>
+    <option value="17">Αχαρνές (Μενίδι)</option>
+    <option value="9">Παπάγου</option>
+    <option value="8">Χολαργός</option>
+    <option value="6">Φιλοθέη</option>
+    <option value="7">Ψυχικό</option>
+    <option value="9">Νέα Ερυθραία</option>
+    <option value="10">Εκάλη</option>
+    <option value="11">Άνοιξη</option>
+    <option value="12">Δροσιά</option>
+    <option value="6">Πεύκη</option>
+    <option value="7">Λυκόβρυση</option>
+    <option value="7">Βριλήσσια</option>
+    <option value="6">Πεντέλη</option>
+    <option value="14">Αγ. Δημήτριος</option>
+    <option value="15">Ηλιούπολη</option>
+    <option value="35">Αναβυσσός</option>
+    <option value="45">Σούνιο</option>
+    <option value="40">Λαύριο</option>
+    <option value="25">Μαρκόπουλο</option>
+    <option value="23">Σπάτα</option>
+    <option value="26">Αρτέμιδα</option>
+    <option value="28">Ραφήνα</option>
+    <option value="30">Νέα Μάκρη</option>
+    <option value="18">Γέρακας</option>
+    <option value="20">Παλλήνη</option>
+    <option value="21">Ανθούσα</option>
+    <option value="22">Παιανία</option>
+    <option value="23">Κορωπί</option>
+    <option value="24">Βάρη</option>
+    <option value="25">Βούλα</option>
+    <option value="26">Βουλιαγμένη</option>
+  </select>
+
+  <label for="items">Επιπλέον Αντικείμενα (πέραν του πρώτου):</label>
+  <input type="number" id="items" min="0" value="0" />
+
+  <button onclick="calculateCost()">Υπολόγισε Κόστος</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculateCost() {
+      const select = document.getElementById("city");
+      const distance = parseFloat(select.value);
+      const cityName = select.options[select.selectedIndex].text;
+      const extraItems = parseInt(document.getElementById("items").value) || 0;
+      const result = document.getElementById("result");
+
+      if (isNaN(distance)) {
+        result.textContent = "❗ Παρακαλώ επιλέξτε πόλη.";
+        result.style.color = "red";
+        return;
+      }
+
+      const steps = Math.ceil(distance / 5);
+      let cost = steps * 5;
+      if (cost < 10) cost = 10;
+      cost += extraItems * 5;
+
+      result.style.color = "#006600";
+      result.innerHTML = `Κόστος μεταφοράς προς <strong>${cityName}</strong>: <br> <span style="font-size: 24px">€${cost.toFixed(2)}</span>`;
+    }
+  </script>
+</body>
+</html>

@@ -1,139 +1,112 @@
-
 <!DOCTYPE html>
 <html lang="el">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Υπολογισμός Κόστους Μεταφοράς</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 500px;
-      margin: 30px auto;
-      padding: 20px;
-      background: #f2f2f2;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-    }
-    label, select, input, button {
-      font-size: 16px;
-      margin-bottom: 15px;
-      display: block;
-      width: 100%;
-    }
+    body { font-family: Arial; padding: 20px; max-width: 700px; margin: auto; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
     select, input, button {
-      padding: 10px;
+      width: 100%; padding: 10px; margin-top: 5px;
     }
     button {
-      background-color: #0077cc;
-      color: white;
-      border: none;
-      cursor: pointer;
+      background-color: #007bff; color: white; border: none; cursor: pointer;
     }
-    button:hover {
-      background-color: #005fa3;
-    }
-    #result {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      color: green;
-    }
+    #result { margin-top: 20px; background: #f2f2f2; padding: 15px; font-size: 1.2em; }
   </style>
 </head>
 <body>
-  <h2>📍 Υπολογισμός Κόστους Μεταφοράς από Μελίσσια</h2>
-  <label for="city">Επιλέξτε Πόλη Προορισμού:</label>
-  <select id="city">
-    <option value="">— Επιλογή πόλης —</option>
-    <option value="5">Αθήνα (Κέντρο)</option>
-    <option value="10">Πειραιάς</option>
-    <option value="6">Χαλάνδρι</option>
-    <option value="7">Μαρούσι</option>
-    <option value="8">Κηφισιά</option>
-    <option value="9">Ηράκλειο</option>
-    <option value="10">Μεταμόρφωση</option>
-    <option value="6">Αγία Παρασκευή</option>
-    <option value="15">Γλυφάδα</option>
-    <option value="16">Αργυρούπολη</option>
-    <option value="14">Καλλιθέα</option>
-    <option value="13">Νέα Σμύρνη</option>
-    <option value="15">Περιστέρι</option>
-    <option value="17">Ίλιον</option>
-    <option value="12">Νέα Ιωνία</option>
-    <option value="12">Νέα Φιλαδέλφεια</option>
-    <option value="16">Αιγάλεω</option>
-    <option value="18">Κορυδαλλός</option>
-    <option value="18">Νίκαια</option>
-    <option value="11">Άγιοι Ανάργυροι</option>
-    <option value="19">Πετρούπολη</option>
-    <option value="9">Ζωγράφου</option>
-    <option value="10">Βύρωνας</option>
-    <option value="10">Δάφνη</option>
-    <option value="11">Υμηττός</option>
-    <option value="11">Καισαριανή</option>
-    <option value="13">Παλαιό Φάληρο</option>
-    <option value="17">Αχαρνές (Μενίδι)</option>
-    <option value="9">Παπάγου</option>
-    <option value="8">Χολαργός</option>
-    <option value="6">Φιλοθέη</option>
-    <option value="7">Ψυχικό</option>
-    <option value="9">Νέα Ερυθραία</option>
-    <option value="10">Εκάλη</option>
-    <option value="11">Άνοιξη</option>
-    <option value="12">Δροσιά</option>
-    <option value="6">Πεύκη</option>
-    <option value="7">Λυκόβρυση</option>
-    <option value="7">Βριλήσσια</option>
-    <option value="6">Πεντέλη</option>
-    <option value="14">Αγ. Δημήτριος</option>
-    <option value="15">Ηλιούπολη</option>
-    <option value="35">Αναβυσσός</option>
-    <option value="45">Σούνιο</option>
-    <option value="40">Λαύριο</option>
-    <option value="25">Μαρκόπουλο</option>
-    <option value="23">Σπάτα</option>
-    <option value="26">Αρτέμιδα</option>
-    <option value="28">Ραφήνα</option>
-    <option value="30">Νέα Μάκρη</option>
-    <option value="18">Γέρακας</option>
-    <option value="20">Παλλήνη</option>
-    <option value="21">Ανθούσα</option>
-    <option value="22">Παιανία</option>
-    <option value="23">Κορωπί</option>
-    <option value="24">Βάρη</option>
-    <option value="25">Βούλα</option>
-    <option value="26">Βουλιαγμένη</option>
+
+  <h2>Υπολογισμός Κόστους Μεταφοράς</h2>
+
+  <label for="destination">Τελικός Προορισμός:</label>
+  <select id="destination">
+    <option value="">Επιλέξτε πόλη</option>
   </select>
 
-  <label for="items">Επιπλέον Αντικείμενα (πέραν του πρώτου):</label>
-  <input type="number" id="items" min="0" value="0" />
+  <label for="intermediate">Ενδιάμεσος Προορισμός (προαιρετικά):</label>
+  <select id="intermediate">
+    <option value="">Κανένας</option>
+  </select>
+
+  <label for="parcels">Επιπλέον ασυνόδευτα δέματα:</label>
+  <input type="number" id="parcels" min="0" value="0">
+
+  <label>
+    <input type="checkbox" id="special"> Λιμάνι / Αεροδρόμιο / Πρακτορείο (+10€)
+  </label>
 
   <button onclick="calculateCost()">Υπολόγισε Κόστος</button>
 
   <div id="result"></div>
 
   <script>
-    function calculateCost() {
-      const select = document.getElementById("city");
-      const distance = parseFloat(select.value);
-      const cityName = select.options[select.selectedIndex].text;
-      const extraItems = parseInt(document.getElementById("items").value) || 0;
-      const result = document.getElementById("result");
+    const distances = {
+      "Αθήνα": 17, "Χαλάνδρι": 5, "Μαρούσι": 4, "Πειραιάς": 32, "Κηφισιά": 7, "Γλυφάδα": 27,
+      "Αγία Παρασκευή": 6, "Νέα Ιωνία": 9, "Αιγάλεω": 20, "Αεροδρόμιο Ελ. Βενιζέλος": 28,
+      "Άγιοι Ανάργυροι": 13, "Άγιος Δημήτριος": 21, "Αλιμος": 23, "Αναβυσσός": 47,
+      "Αργυρούπολη": 21, "Ασπρόπυργος": 33, "Βάρη": 30, "Βούλα": 31, "Βουλιαγμένη": 33,
+      "Γαλάτσι": 10, "Δάφνη": 18, "Ελληνικό": 25, "Ζωγράφου": 14, "Ηλιούπολη": 20,
+      "Θρακομακεδόνες": 12, "Ιλίσια": 15, "Καλλιθέα": 19, "Καματερό": 17, "Κερατσίνι": 29,
+      "Κορυδαλλός": 26, "Λαύριο": 51, "Λυκόβρυση": 6, "Μεταμόρφωση": 8, "Μοσχάτο": 20,
+      "Νέα Ερυθραία": 6, "Νέα Σμύρνη": 20, "Νέο Ηράκλειο": 7, "Νίκαια": 25, "Παιανία": 21,
+      "Παλαιό Φάληρο": 23, "Παλλήνη": 14, "Περιστέρι": 16, "Πετρούπολη": 17, "Πεύκη": 5,
+      "Ραφήνα": 32, "Σαλαμίνα (Λιμάνι)": 40, "Σπάτα": 26, "Ταύρος": 18, "Υμηττός": 18,
+      "Φιλοθέη": 9, "Χαϊδάρι": 20, "Ψυχικό": 11, "Αχαρνές": 10, "Βριλήσσια": 2, "Γέρακας": 7,
+      "Νέα Πεντέλη": 3, "Πικέρμι": 20, "Αγ. Στέφανος": 12, "Παπάγου": 9, "Κάτω Πατήσια": 13,
+      "Περισσός": 11
+    };
 
-      if (isNaN(distance)) {
-        result.textContent = "❗ Παρακαλώ επιλέξτε πόλη.";
-        result.style.color = "red";
+    const destinationSelect = document.getElementById("destination");
+    const intermediateSelect = document.getElementById("intermediate");
+
+    for (const city in distances) {
+      const opt1 = document.createElement("option");
+      opt1.value = city;
+      opt1.textContent = city;
+      destinationSelect.appendChild(opt1);
+
+      const opt2 = document.createElement("option");
+      opt2.value = city;
+      opt2.textContent = city;
+      intermediateSelect.appendChild(opt2.cloneNode(true));
+    }
+
+    function calculateCost() {
+      const dest = destinationSelect.value;
+      const inter = intermediateSelect.value;
+      const parcels = parseInt(document.getElementById("parcels").value) || 0;
+      const isSpecial = document.getElementById("special").checked;
+
+      if (!dest) {
+        document.getElementById("result").textContent = "Παρακαλώ επιλέξτε τελικό προορισμό.";
         return;
       }
 
-      const steps = Math.ceil(distance / 5);
-      let cost = steps * 5;
-      if (cost < 10) cost = 10;
-      cost += extraItems * 5;
+      let totalDistance = distances[dest];
+      if (inter && inter !== dest) {
+        totalDistance += distances[inter];
+      }
 
-      result.style.color = "#006600";
-      result.innerHTML = `Κόστος μεταφοράς προς <strong>${cityName}</strong>: <br> <span style="font-size: 24px">€${cost.toFixed(2)}</span>`;
+      let cost = 10;
+      if (totalDistance > 5) {
+        cost += Math.ceil((totalDistance - 5) / 5) * 5;
+      }
+
+      if (parcels > 0) {
+        cost += parcels * 5;
+      }
+
+      if (isSpecial) {
+        cost += 10;
+      }
+
+      document.getElementById("result").innerHTML = `
+        <strong>Συνολική απόσταση:</strong> ${totalDistance} χλμ<br>
+        <strong>Τελικό Κόστος:</strong> €${cost.toFixed(2)}
+      `;
     }
   </script>
+
 </body>
 </html>
